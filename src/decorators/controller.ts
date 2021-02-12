@@ -46,6 +46,7 @@ export function controller(routePrefix: string) {
       const validator = bodyValidator(requiredBodyProps);
 
       if (path) {
+        console.log(`registering ${method}: ${routePrefix}${path}`);
         router[method](
           `${routePrefix}${path}`,
           ...middlewares,

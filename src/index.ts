@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { AppRouter } from './AppRouter';
 import './controllers/LoginController';
+import './controllers/UserController';
 import { connectDB } from './database/db';
 
 dotenv.config();
