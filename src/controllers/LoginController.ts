@@ -12,7 +12,6 @@ export class LoginController {
   @required('email', 'password')
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
-    // TODO: JWT
 
     try {
       let user = await User.findOne({ email });

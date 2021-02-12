@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
-import { post } from '../decorators/routes';
+import { get, post } from '../decorators/routes';
+import { use } from '../decorators/use';
 import { controller } from '../decorators/controller';
 import { required } from '../decorators/required';
+import { auth } from '../middleware/auth';
 import User from '../database/User';
 import bcrypt from 'bcrypt';
 import { getToken } from '../jwtUtil';
@@ -30,6 +32,18 @@ export class UserController {
 
       const token = getToken({ user_id: user.id });
       res.json({ token });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ msg: 'Big OOF - something went wrong!' });
+    }
+  }
+
+  @get('/')
+  @use(auth)
+  async getUser(req: Request, res: Response) {
+    try {
+      const user = await User.findById(res.locals.user.user_id);
+      res.json(user);
     } catch (err) {
       console.log(err);
       res.status(500).send({ msg: 'Big OOF - something went wrong!' });
